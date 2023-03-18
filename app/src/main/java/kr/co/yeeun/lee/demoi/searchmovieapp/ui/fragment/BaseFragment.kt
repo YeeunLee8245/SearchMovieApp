@@ -18,7 +18,7 @@ abstract class BaseFragment<VB: ViewBinding> : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = getBinding(layoutInflater, container)
-        return inflater.inflate(R.layout.fragment_base, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

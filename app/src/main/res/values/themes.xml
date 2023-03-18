@@ -13,4 +13,9 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="ItemTextView">
+        <item name="android:textSize">@dimen/item_text_size</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>

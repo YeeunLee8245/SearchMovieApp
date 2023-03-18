@@ -8,7 +8,6 @@ import kr.co.yeeun.lee.demoi.searchmovieapp.R
 
 class MainActivity : AppCompatActivity() {
     private val viewmodel: MovieViewModel by viewModels()
-    private val navController by lazy { findNavController(R.id.nav_host_fragment) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
