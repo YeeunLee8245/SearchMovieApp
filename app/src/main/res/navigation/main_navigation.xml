@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/search_fragment">
+
+    <fragment
+        android:id="@+id/search_fragment"
+        android:name="kr.co.yeeun.lee.demoi.searchmovieapp.ui.fragment.SearchFragment"/>
+    <fragment
+        android:id="@+id/history_fragment"
+        android:name="kr.co.yeeun.lee.demoi.searchmovieapp.ui.fragment.HistoryFragment"/>
+    <fragment
+        android:id="@+id/webview_fragment"
+        android:name="kr.co.yeeun.lee.demoi.searchmovieapp.ui.fragment.WebViewFragment"/>
+
+</navigation>

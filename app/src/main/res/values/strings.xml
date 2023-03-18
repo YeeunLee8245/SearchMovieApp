@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">SearchMovieApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="search_fragment">검색 화면</string>
+    <string name="history_fragment">기록 화면</string>
+    <string name="webview_fragment">웹뷰 화면</string>
+
 </resources>
