@@ -10,4 +10,6 @@
     <string name="search">검색</string>
     <string name="latest_search">최근검색</string>
 
+    <string name="response_error">데이터를 가져오는 것에 실패했습니다.</string>
+
 </resources>
