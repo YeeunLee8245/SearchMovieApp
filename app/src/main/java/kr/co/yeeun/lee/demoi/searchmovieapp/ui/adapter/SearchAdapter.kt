@@ -11,8 +11,9 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import kr.co.yeeun.lee.demoi.searchmovieapp.R
 import kr.co.yeeun.lee.demoi.searchmovieapp.data.model.Movie
 import kr.co.yeeun.lee.demoi.searchmovieapp.databinding.ItemSearchResultBinding
+import kr.co.yeeun.lee.demoi.searchmovieapp.ui.OnMovieClickListener
 
-class SearchAdapter : PagingDataAdapter<Movie, SearchAdapter.ViewHolder>(SearchDiffUtil) {
+class SearchAdapter(private val listener: OnMovieClickListener) : PagingDataAdapter<Movie, SearchAdapter.ViewHolder>(SearchDiffUtil) {
 
     object SearchDiffUtil : DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
@@ -27,14 +28,14 @@ class SearchAdapter : PagingDataAdapter<Movie, SearchAdapter.ViewHolder>(SearchD
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemSearchResultBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding, listener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
     }
 
-    class ViewHolder(private val binding: ItemSearchResultBinding) :
+    class ViewHolder(private val binding: ItemSearchResultBinding, private val listener: OnMovieClickListener) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Movie) {
@@ -50,6 +51,9 @@ class SearchAdapter : PagingDataAdapter<Movie, SearchAdapter.ViewHolder>(SearchD
                 titleText.text = "${root.context.getString(R.string.title)} : ${Html.fromHtml(item.title, Html.FROM_HTML_MODE_LEGACY)}"
                 releaseText.text = "${root.context.getString(R.string.release)} : ${item.pubDate}"
                 gradeText.text = "${root.context.getString(R.string.rate)} : ${item.userRating}"
+                root.setOnClickListener {
+                    listener.onMovieItemClicked(item.link)
+                }
             }
         }
 

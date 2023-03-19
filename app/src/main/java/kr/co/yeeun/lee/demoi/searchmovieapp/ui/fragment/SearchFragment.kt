@@ -1,14 +1,18 @@
 package kr.co.yeeun.lee.demoi.searchmovieapp.ui.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.room.util.query
@@ -18,13 +22,15 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kr.co.yeeun.lee.demoi.searchmovieapp.R
 import kr.co.yeeun.lee.demoi.searchmovieapp.databinding.FragmentSearchBinding
+import kr.co.yeeun.lee.demoi.searchmovieapp.ui.OnMovieClickListener
 import kr.co.yeeun.lee.demoi.searchmovieapp.ui.activity.MovieViewModel
 import kr.co.yeeun.lee.demoi.searchmovieapp.ui.adapter.PagingLoadStateAdapter
 import kr.co.yeeun.lee.demoi.searchmovieapp.ui.adapter.SearchAdapter
+import kr.co.yeeun.lee.demoi.searchmovieapp.util.Constant
 import kr.co.yeeun.lee.demoi.searchmovieapp.util.ShowAlert
 
 @AndroidEntryPoint
-class SearchFragment : BaseFragment<FragmentSearchBinding>() {
+class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListener {
     private val viewmodel: MovieViewModel by viewModels({requireActivity()})
     private var searchAdapter: SearchAdapter? = null
     private var pagingJob: Job? = null
@@ -32,7 +38,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("부모 액티비티", requireActivity().toString())
-        searchAdapter = SearchAdapter()
+        searchAdapter = SearchAdapter(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -113,5 +119,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                 }
             }
         }
+    }
+
+    override fun onMovieItemClicked(url: String) {
+        val uri = Uri.parse(url)
+        val webIntent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(webIntent)
     }
 }
