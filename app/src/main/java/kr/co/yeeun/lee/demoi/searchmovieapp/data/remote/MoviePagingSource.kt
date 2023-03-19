@@ -37,7 +37,7 @@ class MoviePagingSource(
                 nextKey = if ((key * Constant.PAGING_SIZE) > (response?.total ?: 0)) null else key.plus(1)
             )
         } catch (e: java.lang.Exception) {
-            Log.d("응답 오류", "${e}")
+//            Log.d("응답 오류", "${e}")
             LoadResult.Error(e)
         }
     }

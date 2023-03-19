@@ -25,7 +25,7 @@ class HistoryAdapter(private val itemList: LinkedList<String>, private val liste
     class ViewHolder(private val binding: ItemHistoryBinding, private val listener: OnHistoryClickListener) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: String) {
             binding.apply {
-                Log.d("히스토리 아이템", item)
+//                Log.d("히스토리 아이템", item)
                 keywordText.text = "${absoluteAdapterPosition+1}. $item"
                 root.setOnClickListener { listener.onHistoryItemClicked(item) }
             }

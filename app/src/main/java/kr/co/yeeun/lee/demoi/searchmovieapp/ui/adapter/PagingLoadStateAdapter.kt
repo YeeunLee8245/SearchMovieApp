@@ -26,7 +26,7 @@ class PagingLoadStateAdapter() : LoadStateAdapter<PagingLoadStateAdapter.ViewHol
 
     class ViewHolder(private val binding: LayoutLoadingBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(state: LoadState) {
-            Log.d("페이징 로딩 상태", state.toString())
+//            Log.d("페이징 로딩 상태", state.toString())
             binding.apply {
                 when (state) {
                     is LoadState.Error -> {

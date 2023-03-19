@@ -49,7 +49,7 @@ class MovieViewModel @Inject constructor(private val movieDataStore: MovieDataSt
             for (i in 0 until jsonArray.length()) {
                 itemList.addLast(jsonArray.optString(i))
             }
-            Log.d("불러온 기록", jsonArray.toString())
+//            Log.d("불러온 기록", jsonArray.toString())
             _historyList.value = itemList
         }
     }
@@ -62,7 +62,7 @@ class MovieViewModel @Inject constructor(private val movieDataStore: MovieDataSt
                     jsonArray.put(item)
             }
         }
-        Log.d("저장되는 기록", jsonArray.toString())
+//        Log.d("저장되는 기록", jsonArray.toString())
         sharedPreferences.edit().putString(Constant.HISTORY_EDITOR_TAG, jsonArray.toString()).apply()
     }
 }

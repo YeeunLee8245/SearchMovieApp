@@ -15,12 +15,12 @@ class MovieDataStore @Inject constructor(private val context: Context, private v
         display: Int,
         start: Int
     ): MovieResponse? {
-        Log.d("응답 받기 시작", "$query $display $start")
+//        Log.d("응답 받기 시작", "$query $display $start")
         val response = apiService.getMovieResponse(query, display, start)
         val body = response.body()
-        Log.d("응답 코드 확인", response.code().toString())
-        Log.d("응답 바디 확인", response.body().toString())
-        Log.d("응답 메시지 확인", response.message())
+//        Log.d("응답 코드 확인", response.code().toString())
+//        Log.d("응답 바디 확인", response.body().toString())
+//        Log.d("응답 메시지 확인", response.message())
         if (response.code() / 100 in 4..5) {
             throw java.lang.Exception(response.message())
         }

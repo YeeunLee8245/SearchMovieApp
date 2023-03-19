@@ -1,22 +1,17 @@
 package kr.co.yeeun.lee.demoi.searchmovieapp.ui.fragment
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
-import androidx.room.util.query
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -29,7 +24,6 @@ import kr.co.yeeun.lee.demoi.searchmovieapp.ui.adapter.PagingLoadStateAdapter
 import kr.co.yeeun.lee.demoi.searchmovieapp.ui.adapter.SearchAdapter
 import kr.co.yeeun.lee.demoi.searchmovieapp.util.Constant
 import kr.co.yeeun.lee.demoi.searchmovieapp.util.ShowAlert
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListener {
@@ -40,8 +34,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("부모 액티비티", requireActivity().toString())
-        Log.d("검색내역으로부터 받은 키워드", arguments?.getString(Constant.SEARCH_QUERY_TAG).toString())
+//        Log.d("부모 액티비티", requireActivity().toString())
+//        Log.d("검색내역으로부터 받은 키워드", arguments?.getString(Constant.SEARCH_QUERY_TAG).toString())
         searchAdapter = SearchAdapter(this)
         historyQuery = arguments?.getString(Constant.SEARCH_QUERY_TAG)
     }
@@ -96,7 +90,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListen
     private fun clickSearch() {
         binding?.apply {
             if (searchEditText.text.trim().isNotEmpty()) {
-                Log.d("유효한 쿼리", searchEditText.text.toString())
+//                Log.d("유효한 쿼리", searchEditText.text.toString())
                 searchEditText.error = null
                 movieRecycler.scrollToPosition(0)
                 getMovieResponse(searchEditText.text.toString())
@@ -111,7 +105,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListen
         pagingJob?.cancel()
         pagingJob = lifecycleScope.launch {
             viewmodel.getMoviePagingSource(query).collectLatest { data ->
-                Log.d("데이터 확인", "$query $data")
+//                Log.d("데이터 확인", "$query $data")
                 searchAdapter?.submitData(data)
             }
         }
@@ -122,7 +116,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListen
         binding?.apply {
             when (loadState.refresh) {
                 is LoadState.Error -> {
-                    Log.d("오류 확인", loadState.toString())
+//                    Log.d("오류 확인", loadState.toString())
                     if (loadingProgressBar.isVisible) {
                         (loadState.refresh as LoadState.Error).error.message?.let {
                             ShowAlert.showAlert(

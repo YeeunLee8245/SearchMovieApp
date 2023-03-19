@@ -28,7 +28,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), OnHistoryClickLi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         historyAdapter = viewmodel.historyList.value?.let { HistoryAdapter(it, this) }
-        Log.d("히스토리 기록 화면에서 받음", viewmodel.historyList.value.toString())
+//        Log.d("히스토리 기록 화면에서 받음", viewmodel.historyList.value.toString())
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,7 +55,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), OnHistoryClickLi
     }
 
     override fun onHistoryItemClicked(keyword: String) {
-        Log.d("기록 클릭", keyword.toString())
+//        Log.d("기록 클릭", keyword)
         val bundle = bundleOf(Constant.SEARCH_QUERY_TAG to keyword)
         findNavController().navigate(R.id.action_history_fragment_to_search_fragment, bundle)
     }
