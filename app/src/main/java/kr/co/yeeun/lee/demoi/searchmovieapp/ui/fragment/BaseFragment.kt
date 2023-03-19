@@ -6,19 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.yeeun.lee.demoi.searchmovieapp.R
 
 abstract class BaseFragment<VB: ViewBinding> : Fragment() {
 
-    private var _binding: VB? = null
-    protected val binding get() = _binding!!
+    protected var binding: VB? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = getBinding(layoutInflater, container)
-        return binding.root
+        binding = getBinding(layoutInflater, container)
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,7 +28,7 @@ abstract class BaseFragment<VB: ViewBinding> : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
+        binding = null
     }
 
     abstract fun getBinding(inflater: LayoutInflater, container: ViewGroup?): VB

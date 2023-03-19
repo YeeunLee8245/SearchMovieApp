@@ -1,24 +1,32 @@
 package kr.co.yeeun.lee.demoi.searchmovieapp.data.remote
 
+import android.content.Context
 import android.util.Log
+import kr.co.yeeun.lee.demoi.searchmovieapp.R
+import kr.co.yeeun.lee.demoi.searchmovieapp.data.model.MovieResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MovieDataStore @Inject constructor(private val apiClient: ApiClient) {
-    val api = apiClient.retrofit.create(ApiService::class.java)
+class MovieDataStore @Inject constructor(private val context: Context, private val apiService: ApiService) {
 
-//    suspend fun getMovieResponse(
-//        query: String,
-//        display: Int,
-//        start: Int,
-//        callback()
-//    ) {
-//        return try {
-//            val response = api.getMovieResponse(query, display, start)
-//        } catch (e: Exception) {
-//            Log.e("응답 오류", e.toString())
-//
-//        }
-//    }
+    suspend fun getMovieResponse(
+        query: String,
+        display: Int,
+        start: Int
+    ): MovieResponse? {
+        Log.d("응답 받기 시작", "$query $display $start")
+        val response = apiService.getMovieResponse(query, display, start)
+        val body = response.body()
+        Log.d("응답 코드 확인", response.code().toString())
+        Log.d("응답 바디 확인", response.body().toString())
+        Log.d("응답 메시지 확인", response.message())
+        if (response.code() / 100 in 4..5) {
+            throw java.lang.Exception(response.message())
+        }
+        response.errorBody()?.string()?.let {
+            throw java.lang.Exception(context.getString(R.string.invalid_request))
+        }
+        return body
+    }
 }
