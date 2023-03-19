@@ -6,12 +6,13 @@
 
     <fragment
         android:id="@+id/search_fragment"
-        android:name="kr.co.yeeun.lee.demoi.searchmovieapp.ui.fragment.SearchFragment"/>
+        android:name="kr.co.yeeun.lee.demoi.searchmovieapp.ui.fragment.SearchFragment">
+        <action
+            android:id="@+id/action_search_fragment_to_history_fragment"
+            app:destination="@id/history_fragment" />
+    </fragment>
     <fragment
         android:id="@+id/history_fragment"
         android:name="kr.co.yeeun.lee.demoi.searchmovieapp.ui.fragment.HistoryFragment"/>
-    <fragment
-        android:id="@+id/webview_fragment"
-        android:name="kr.co.yeeun.lee.demoi.searchmovieapp.ui.fragment.WebViewFragment"/>
 
 </navigation>

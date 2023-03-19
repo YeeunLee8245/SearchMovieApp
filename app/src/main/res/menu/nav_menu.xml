@@ -6,7 +6,4 @@
     <item
         android:id="@+id/history_nav"
         android:title="@string/history_fragment" />
-    <item
-        android:id="@+id/webview_nav"
-        android:title="@string/webview_fragment" />
 </menu>
