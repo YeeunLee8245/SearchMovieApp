@@ -1,6 +1,7 @@
 package kr.co.yeeun.lee.demoi.searchmovieapp.ui.fragment
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -28,21 +29,26 @@ import kr.co.yeeun.lee.demoi.searchmovieapp.ui.adapter.PagingLoadStateAdapter
 import kr.co.yeeun.lee.demoi.searchmovieapp.ui.adapter.SearchAdapter
 import kr.co.yeeun.lee.demoi.searchmovieapp.util.Constant
 import kr.co.yeeun.lee.demoi.searchmovieapp.util.ShowAlert
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListener {
     private val viewmodel: MovieViewModel by viewModels({requireActivity()})
     private var searchAdapter: SearchAdapter? = null
     private var pagingJob: Job? = null
+    private var historyQuery: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("부모 액티비티", requireActivity().toString())
+        Log.d("검색내역으로부터 받은 키워드", arguments?.getString(Constant.SEARCH_QUERY_TAG).toString())
         searchAdapter = SearchAdapter(this)
+        historyQuery = arguments?.getString(Constant.SEARCH_QUERY_TAG)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewmodel.setHistoryList()
         subscribeUi()
     }
 
@@ -63,6 +69,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListen
                 }
             }
             searchButton.setOnClickListener {clickSearch()}
+            latestButton.setOnClickListener { moveToHistoryScreen() }
+            historyQuery?.let {
+                searchHistory(it)
+            }
         }
     }
 
@@ -70,6 +80,17 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListen
         super.onDestroy()
         searchAdapter = null
         pagingJob?.cancel()
+    }
+
+    private fun searchHistory(query: String) {
+        binding?.apply {
+            searchEditText.setText(query)
+            getMovieResponse(query)
+        }
+    }
+
+    private fun moveToHistoryScreen() {
+        findNavController().navigate(R.id.action_search_fragment_to_history_fragment)
     }
 
     private fun clickSearch() {
@@ -94,6 +115,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListen
                 searchAdapter?.submitData(data)
             }
         }
+        viewmodel.addHistoryItem(query)
     }
 
     private fun checkErrorState(loadState: CombinedLoadStates) {

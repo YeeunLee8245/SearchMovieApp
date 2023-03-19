@@ -1,7 +1,9 @@
 package kr.co.yeeun.lee.demoi.searchmovieapp.di
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,6 +12,7 @@ import kr.co.yeeun.lee.demoi.searchmovieapp.data.remote.ApiClient
 import kr.co.yeeun.lee.demoi.searchmovieapp.data.remote.ApiService
 import kr.co.yeeun.lee.demoi.searchmovieapp.data.remote.HeadInterceptor
 import kr.co.yeeun.lee.demoi.searchmovieapp.data.remote.MovieDataStore
+import kr.co.yeeun.lee.demoi.searchmovieapp.util.Constant
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import javax.inject.Singleton
@@ -45,4 +48,8 @@ class AppModule {
         return ApiClient(context, headInterceptor)
     }
 
+    @Singleton
+    @Provides
+    fun provideSharedPreferences(context: Context): SharedPreferences =
+        context.getSharedPreferences(Constant.HISTORY_SHARED_PREFER, Activity.MODE_PRIVATE)
 }
