@@ -1,6 +1,7 @@
 package kr.co.yeeun.lee.demoi.searchmovieapp.ui.fragment
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -28,6 +29,7 @@ import kr.co.yeeun.lee.demoi.searchmovieapp.ui.adapter.PagingLoadStateAdapter
 import kr.co.yeeun.lee.demoi.searchmovieapp.ui.adapter.SearchAdapter
 import kr.co.yeeun.lee.demoi.searchmovieapp.util.Constant
 import kr.co.yeeun.lee.demoi.searchmovieapp.util.ShowAlert
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListener {
@@ -43,6 +45,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewmodel.setHistoryList()
         subscribeUi()
     }
 
@@ -63,6 +66,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListen
                 }
             }
             searchButton.setOnClickListener {clickSearch()}
+            latestButton.setOnClickListener { moveToHistoryScreen() }
         }
     }
 
@@ -70,6 +74,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListen
         super.onDestroy()
         searchAdapter = null
         pagingJob?.cancel()
+    }
+
+    private fun moveToHistoryScreen() {
+        findNavController().navigate(R.id.action_search_fragment_to_history_fragment)
     }
 
     private fun clickSearch() {
@@ -94,6 +102,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListen
                 searchAdapter?.submitData(data)
             }
         }
+        viewmodel.addHistoryItem(query)
     }
 
     private fun checkErrorState(loadState: CombinedLoadStates) {
