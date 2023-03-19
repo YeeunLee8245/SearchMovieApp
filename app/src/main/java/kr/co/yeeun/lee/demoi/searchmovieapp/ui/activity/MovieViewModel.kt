@@ -34,6 +34,9 @@ class MovieViewModel @Inject constructor(private val movieDataStore: MovieDataSt
 
     fun addHistoryItem(keyword: String) {
         historyList.value?.let { historyLi ->
+            while (historyLi.contains(keyword)) {
+                historyLi.remove(keyword)
+            }
             while (historyLi.size >= Constant.HISTORY_LIST_SIZE) {
                 _historyList.value?.removeLast()
             }
