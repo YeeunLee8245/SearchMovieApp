@@ -7,4 +7,5 @@ object Constant {
     const val HISTORY_SHARED_PREFER = "history_shared_prefer"
     const val HISTORY_EDITOR_TAG = "history_editor_tag"
     const val HISTORY_LIST_SIZE = 10
+    const val SEARCH_QUERY_TAG = "search_query_tag"
 }

@@ -36,11 +36,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListen
     private val viewmodel: MovieViewModel by viewModels({requireActivity()})
     private var searchAdapter: SearchAdapter? = null
     private var pagingJob: Job? = null
+    private var historyQuery: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("부모 액티비티", requireActivity().toString())
+        Log.d("검색내역으로부터 받은 키워드", arguments?.getString(Constant.SEARCH_QUERY_TAG).toString())
         searchAdapter = SearchAdapter(this)
+        historyQuery = arguments?.getString(Constant.SEARCH_QUERY_TAG)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,6 +70,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListen
             }
             searchButton.setOnClickListener {clickSearch()}
             latestButton.setOnClickListener { moveToHistoryScreen() }
+            historyQuery?.let {
+                searchHistory(it)
+            }
         }
     }
 
@@ -74,6 +80,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), OnMovieClickListen
         super.onDestroy()
         searchAdapter = null
         pagingJob?.cancel()
+    }
+
+    private fun searchHistory(query: String) {
+        binding?.apply {
+            searchEditText.setText(query)
+            getMovieResponse(query)
+        }
     }
 
     private fun moveToHistoryScreen() {

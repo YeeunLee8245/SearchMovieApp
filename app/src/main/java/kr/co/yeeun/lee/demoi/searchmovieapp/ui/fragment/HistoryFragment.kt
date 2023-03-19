@@ -5,14 +5,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import kr.co.yeeun.lee.demoi.searchmovieapp.R
 import kr.co.yeeun.lee.demoi.searchmovieapp.databinding.FragmentHistoryBinding
 import kr.co.yeeun.lee.demoi.searchmovieapp.ui.OnHistoryClickListener
 import kr.co.yeeun.lee.demoi.searchmovieapp.ui.activity.MovieViewModel
 import kr.co.yeeun.lee.demoi.searchmovieapp.ui.adapter.HistoryAdapter
+import kr.co.yeeun.lee.demoi.searchmovieapp.util.Constant
 import okhttp3.internal.notify
 import okhttp3.internal.notifyAll
 
@@ -52,6 +56,8 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), OnHistoryClickLi
 
     override fun onHistoryItemClicked(keyword: String) {
         Log.d("기록 클릭", keyword.toString())
+        val bundle = bundleOf(Constant.SEARCH_QUERY_TAG to keyword)
+        findNavController().navigate(R.id.action_history_fragment_to_search_fragment, bundle)
     }
 
 }
